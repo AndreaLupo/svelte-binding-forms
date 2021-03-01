@@ -1,6 +1,7 @@
 <script>
     import CustomInput from "./CustomInput.svelte";
     import Toggle from "./Toggle.svelte";
+    import {isValidEmail} from "./validation";
 
     let val = 'Max';
     let price = 0;
@@ -8,19 +9,30 @@
     let agreed = false;
     let favColor = 'green';
     let singleFavColor = 'red';
+    let enteredEmail = '';
 
     // html elements
     let usernameInput;
     let someDiv;
     let customInput;
 
+    let formIsValid = false;
+
     $:console.log(val);
     $:console.log(selectedOption);
     $:console.log(agreed);
     $:console.log(favColor);
     $:console.log(singleFavColor);
-
     $:console.log(customInput);
+    
+
+    $: if(isValidEmail(enteredEmail)) {
+        formIsValid = true;
+    }
+    else {
+        formIsValid = false;
+    }
+    
     function setValue(event) {
         val = event.target.value;
     }
@@ -77,3 +89,18 @@
 <button on:click={saveData}>Save</button>
 
 <div bind:this={someDiv}>Ok!</div>
+
+<hr/>
+
+<!-- validation -->
+<form on:submit|preventDefault>
+    <input type="email" bind:value={enteredEmail} class={isValidEmail(enteredEmail) ? '' : 'invalid'}>
+    <button type="submit" disabled={!formIsValid}>Save</button>
+</form>
+
+
+<style>
+.invalid {
+    border: 1px solid red;
+}
+</style>
