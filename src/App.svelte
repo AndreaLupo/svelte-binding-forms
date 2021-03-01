@@ -7,11 +7,13 @@
     let selectedOption = 1;
     let agreed = false;
     let favColor = 'green';
+    let singleFavColor = 'red';
 
     $:console.log(val);
     $:console.log(selectedOption);
     $:console.log(agreed);
     $:console.log(favColor);
+    $:console.log(singleFavColor);
 
     function setValue(event) {
         val = event.target.value;
@@ -49,3 +51,9 @@
     <input type="radio" name="color" value="blue" bind:group={favColor}>
     Blue
 </label>
+
+<select bind:value={singleFavColor}>
+    <option value="green">Green</option>
+    <option value="red">Red</option>
+    <option value="blue">Blue</option>
+</select>
